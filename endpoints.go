@@ -1,6 +1,7 @@
 package main
 
 import (
+  "fmt"
   "context"
   "net/url"
   "strings"
@@ -52,13 +53,14 @@ func (e Endpoints) CreateReaction(ctx context.Context, r Reaction) ([]byte,error
 func MakeCreateReactionEndpoint(s Service) endpoint.Endpoint {
   return func(ctx context.Context, request interface{}) (response interface{}, err error){
     req := request.(createReactionRequest)
-    h, nil := s.CreateReaction(ctx, req.Reaction)
+    fmt.Println("Address:", req.Reaction.Address)
+    h, nil := s.CreateReaction(ctx, req.Reaction.Address)
     return createReactionResponse{Hash: h}, nil
   }
 }
 
 type createReactionRequest struct {
-  Reaction Reaction
+  Reaction Reaction 
 }
 
 type createReactionResponse struct {

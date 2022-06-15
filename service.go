@@ -7,12 +7,11 @@ import (
 )
 
 type Service interface {
-  CreateReaction(ctx context.Context, r Reaction) ([]byte,error)
+  CreateReaction(ctx context.Context, id string) ([]byte,error)
 }
 
 type Reaction struct {
-  Address string    `json:id`
-  PostID  string    `json:postId`
+  Address string    `json:"id"`
 }
 
 var (
@@ -21,8 +20,8 @@ var (
 
 type reactionService struct{}
 
-func (reactionService) CreateReaction(ctx context.Context, r Reaction) ([]byte, error){
-  return encryptSHA256(r.Address),nil
+func (reactionService) CreateReaction(ctx context.Context, id string) ([]byte, error){
+  return encryptSHA256(id),nil
 }
 
 func encryptSHA256(data string) []byte{

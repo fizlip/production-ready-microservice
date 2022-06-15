@@ -1,6 +1,7 @@
 package main
 
 import (
+  "fmt"
   "bytes"
   "context"
   "errors"
@@ -39,14 +40,17 @@ func MakeHTTPHandler(s Service, logger log.Logger) http.Handler{
 
 func decodeCreateReactionRequest(_ context.Context, r *http.Request) (request interface{}, err error){
   var req createReactionRequest
+  fmt.Println("Body of request: ", r.Body)
   if e := json.NewDecoder(r.Body).Decode(&req.Reaction); e != nil{
     return nil, e
   }
+  fmt.Println("Decoded request: ", req)
+
   return req, nil
 }
 
 func encodeCreateReactionRequest(ctx context.Context, req *http.Request, request interface{}) error {
-  req.URL.Path = "/api/create"
+  req.URL.Path = "/profiles/"
   return encodeRequest(ctx, req, request)
 }
 

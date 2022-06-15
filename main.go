@@ -50,5 +50,3 @@ func main(){
   logger.Log("exit", <-errs)
 
 }
-
-
