@@ -28,6 +28,7 @@ func main(){
   var s Service
   {
     s = reactionService{}
+    s = LoggingMiddleware(logger)(s)
   }
 
   var h http.Handler
